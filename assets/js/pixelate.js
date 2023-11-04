@@ -1,11 +1,13 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const image = new Image();
+
 const canvasWidth = 700;
 const canvasHeight = 500;
 
+let image = new Image();
+loadImage();
+
 function loadImage() {
-  const select = document.getElementById("image-select");
   const file = document.getElementById("file-input").files[0];
   if (file) {
     const reader = new FileReader();
@@ -17,30 +19,34 @@ function loadImage() {
     };
     reader.readAsDataURL(file);
   } else {
+    image.src = "./assets/images/test.jpg";
     image.onload = function () {
       drawImage();
     };
-    image.src = select.value;
   }
 }
 
 function drawImage() {
+  const aspectRatio = image.width / image.height;
+
   let width, height;
-  if (image.width > image.height) {
+  if (aspectRatio > 1) {
     width = canvasWidth;
-    height = image.height * (canvasWidth / image.width);
+    height = canvasWidth / aspectRatio;
   } else {
-    width = image.width * (canvasHeight / image.height);
+    width = canvasHeight * aspectRatio;
     height = canvasHeight;
   }
-  canvas.width = canvasWidth;
-  canvas.height = canvasHeight;
+
+  canvas.width = width;
+  canvas.height = height;
+  ctx.clearRect(0, 0, width, height);
   ctx.drawImage(image, 0, 0, width, height);
   pixelate();
 }
 
 function pixelate() {
-  const size = parseInt(document.getElementById("pixel-slider").value);
+  const size = 51 - parseInt(document.getElementById("pixel-slider").value);
   const w = canvas.width / size;
   const h = canvas.height / size;
   ctx.imageSmoothingEnabled = false;

@@ -13,15 +13,6 @@
   <body>
     <h1>Pixelate Image</h1>
     <p>
-      <label for="image-select">Select an image:</label>
-      <select id="image-select" onchange="loadImage()">
-        <option value="images/beach.jpg">Beach</option>
-        <option value="images/forest.jpg">Forest</option>
-        <option value="images/mountains.jpg">Mountains</option>
-        <option value="images/sunset.jpg">Sunset</option>
-      </select>
-    </p>
-    <p>
       <label for="file-input">Or upload your own image:</label>
       <input
         type="file"
@@ -37,7 +28,7 @@
         id="pixel-slider"
         min="1"
         max="50"
-        value="0"
+        value="1"
         onchange="pixelate()"
       />
     </p>
